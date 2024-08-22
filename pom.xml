@@ -7,6 +7,7 @@
 		<module>stats/stats-client</module>
 		<module>stats/stats-server</module>
 		<module>stats/stats-dto</module>
+		<module>main</module>
 	</modules>
 
     <parent>
