@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface StatsRepository extends JpaRepository<EndpointHit, Long> {
-    @Query("SELECT h.app as app, h.uri as uri, count(h.ip) " +
+    @Query("SELECT new ru.practicum.model.ViewStats(h.app as app, h.uri as uri, count(h.ip)) " +
             "FROM EndpointHit as h " +
             "WHERE h.timestamp BETWEEN ?1 AND ?2 " +
             "AND h.uri IN ?3 " +
@@ -19,7 +19,7 @@ public interface StatsRepository extends JpaRepository<EndpointHit, Long> {
             "ORDER BY count(distinct(h.ip)) DESC")
     List<ViewStats> findAllByTimestampAndListOfUris(LocalDateTime startTime, LocalDateTime endTime, List<String> uris);
 
-    @Query("SELECT h.app, h.uri, count(DISTINCT(h.ip)) " +
+    @Query("SELECT new ru.practicum.model.ViewStats(h.app, h.uri, count(DISTINCT(h.ip))) " +
             "FROM EndpointHit as h " +
             "WHERE h.timestamp BETWEEN ?1 AND ?2 " +
             "AND h.uri IN ?3 " +
@@ -27,14 +27,14 @@ public interface StatsRepository extends JpaRepository<EndpointHit, Long> {
             "ORDER BY COUNT(h.ip) DESC")
     List<ViewStats> findAllByTimestampAndListOfUrisAndUniqueIp(LocalDateTime startTime, LocalDateTime endTime, List<String> uris);
 
-    @Query("SELECT h.app as app, h.uri as uri, count(h.ip) " +
+    @Query("SELECT new ru.practicum.model.ViewStats(h.app as app, h.uri as uri, count(h.ip)) " +
             "FROM EndpointHit as h " +
             "WHERE h.timestamp BETWEEN ?1 AND ?2 " +
             "GROUP BY h.app, h.uri " +
             "ORDER BY count(distinct(h.ip)) DESC ")
     List<ViewStats> findAllByTimestamp(LocalDateTime startTime, LocalDateTime endTime);
 
-    @Query("SELECT h.app as app, h.uri as uri, count(DISTINCT(h.ip)) " +
+    @Query("SELECT new ru.practicum.model.ViewStats(h.app as app, h.uri as uri, count(DISTINCT(h.ip))) " +
             "FROM EndpointHit as h " +
             "WHERE h.timestamp BETWEEN ?1 AND ?2 " +
             "GROUP BY app, uri " +

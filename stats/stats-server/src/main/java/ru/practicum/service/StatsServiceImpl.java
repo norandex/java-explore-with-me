@@ -32,11 +32,13 @@ public class StatsServiceImpl implements StatsService {
 
     @Override
     public List<StatsDto> getStats(String start, String end, List<String> uris, Boolean unique) {
-        log.info("get stats");
+        log.info("get stats service");
         LocalDateTime startTime = DateMapper.formatToDateTime(start);
         LocalDateTime endTime = DateMapper.formatToDateTime(end);
+        log.info("parsing finished");
         List<ViewStats> result;
         if (uris != null) {
+            log.info(endTime.toString());
             if (unique) {
                 result = statsRepository.findAllByTimestampAndListOfUrisAndUniqueIp(startTime, endTime, uris);
             } else {
