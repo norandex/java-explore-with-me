@@ -52,6 +52,7 @@ public class StatsServiceImpl implements StatsService {
 
         return result.stream()
                 .map(StatsMapper::toStatDto)
+                .sorted((o1, o2) -> o2.getHits().compareTo(o1.getHits()))
                 .collect(Collectors.toList());
     }
 }
