@@ -23,7 +23,7 @@ public class StatsMapper {
                 .app(hitDto.getApp())
                 .uri(hitDto.getUri())
                 .ip(hitDto.getIp())
-                .timestamp(DateMapper.formatToDateTime(hitDto.getTimestamp()))
+                .timestamp(hitDto.getTimestamp())
                 .build();
     }
 
@@ -32,7 +32,7 @@ public class StatsMapper {
                 .app(hit.getApp())
                 .uri(hit.getUri())
                 .ip(hit.getIp())
-                .timestamp(DateMapper.formatToString(hit.getTimestamp()))
+                .timestamp(hit.getTimestamp())
                 .build();
     }
 
