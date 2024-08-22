@@ -1,10 +1,25 @@
 services:
   stats-server:
+    build: stats/stats-server
+    container_name: stats-server
     ports:
       - "9090:9090"
+    depends_on:
+      - stats-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/stat
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
 
   stats-db:
     image: postgres:16.1
+    container_name: stats-db
+    ports:
+      - "6540:5432"
+    environment:
+      - POSTGRES_DB=stat
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
 
   ewm-service:
     ports:
