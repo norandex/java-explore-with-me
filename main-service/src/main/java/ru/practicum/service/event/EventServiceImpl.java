@@ -214,7 +214,7 @@ public class EventServiceImpl implements EventService {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new NotFoundException("Event with id=" + eventId + " was not found"));
         LocalDateTime updateEventDate = DateMapper.formatToDateTime(updateEventAdminRequest.getEventDate());
-        if (LocalDateTime.now().isAfter(updateEventDate.minusHours(1))) {
+        if (updateEventDate != null && LocalDateTime.now().isAfter(updateEventDate.minusHours(1))) {
             throw new EventDateException("Cannot publish the event because it doesn't meet date time requirements");
         }
         if (LocalDateTime.now().isAfter(event.getEventDate().minusHours(1))) {
