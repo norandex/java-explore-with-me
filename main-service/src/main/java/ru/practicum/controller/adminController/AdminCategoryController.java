@@ -13,6 +13,7 @@ import ru.practicum.service.category.CategoryService;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping(path = "/admin/categories")
 @Slf4j
 @Validated
 public class AdminCategoryController {
