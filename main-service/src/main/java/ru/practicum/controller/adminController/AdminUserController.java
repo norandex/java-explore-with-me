@@ -13,9 +13,9 @@ import ru.practicum.service.user.UserService;
 
 import java.util.List;
 
-@Controller
-@RequiredArgsConstructor
+@RestController
 @RequestMapping(path = "/admin/users")
+@RequiredArgsConstructor
 @Slf4j
 @Validated
 public class AdminUserController {

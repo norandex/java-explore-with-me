@@ -11,9 +11,9 @@ import ru.practicum.dto.category.CategoryDto;
 import ru.practicum.dto.category.NewCategoryDto;
 import ru.practicum.service.category.CategoryService;
 
-@Controller
-@RequiredArgsConstructor
+@RestController
 @RequestMapping(path = "/admin/categories")
+@RequiredArgsConstructor
 @Slf4j
 @Validated
 public class AdminCategoryController {
