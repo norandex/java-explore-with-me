@@ -386,8 +386,8 @@ public class EventServiceImpl implements EventService {
     }
 
     private void saveHit(HttpServletRequest request) {
-        statsClient.saveHit("erm-service", request.getRequestURI()
-                , request.getRemoteAddr(), DateMapper.formatToString(LocalDateTime.now()));
+        statsClient.saveHit("erm-service", request.getRequestURI(),
+                request.getRemoteAddr(), DateMapper.formatToString(LocalDateTime.now()));
     }
 
     private Map<Long, Long> getViews(List<Event> events) {
