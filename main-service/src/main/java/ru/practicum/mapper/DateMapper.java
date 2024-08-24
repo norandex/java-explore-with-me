@@ -9,6 +9,9 @@ public class DateMapper {
     public static final String PATTERN = "yyyy-MM-dd HH:mm:ss";
 
     public static LocalDateTime formatToDateTime(String time) {
+        if (time == null) {
+            return null;
+        }
         try {
             return LocalDateTime.parse(time, DateTimeFormatter.ofPattern(PATTERN));
         } catch (Exception e) {
@@ -17,6 +20,9 @@ public class DateMapper {
     }
 
     public static String formatToString(LocalDateTime time) {
+        if (time == null) {
+            return null;
+        }
         try {
             return time.format(DateTimeFormatter.ofPattern(PATTERN));
         } catch (Exception e) {

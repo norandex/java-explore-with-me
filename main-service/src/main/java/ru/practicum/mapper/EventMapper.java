@@ -1,5 +1,6 @@
 package ru.practicum.mapper;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.practicum.dto.event.EventFullDto;
 import ru.practicum.dto.event.EventShortDto;
 import ru.practicum.dto.event.NewEventDto;
@@ -10,6 +11,7 @@ import ru.practicum.model.enums.EventState;
 
 import java.time.LocalDateTime;
 
+@Slf4j
 public class EventMapper {
 
     public static EventShortDto toEventShortDto(Event event) {
@@ -27,6 +29,7 @@ public class EventMapper {
     }
 
     public static EventFullDto toEventFullDto(Event event) {
+        log.info(event.toString());
         return EventFullDto.builder()
                 .id(event.getId())
                 .eventDate(DateMapper.formatToString(event.getEventDate()))
