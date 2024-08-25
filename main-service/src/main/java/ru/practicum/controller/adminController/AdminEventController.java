@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import java.util.List;
 @RequestMapping("/admin/events")
 @RequiredArgsConstructor
 @Validated
+@Slf4j
 public class AdminEventController {
     private final EventService eventService;
 
@@ -31,6 +33,7 @@ public class AdminEventController {
                                   @RequestParam(required = false) LocalDateTime rangeEnd,
                                   @RequestParam(required = false, defaultValue = "0") @PositiveOrZero Integer from,
                                   @RequestParam(required = false, defaultValue = "10") @Positive Integer size) {
+        log.info("get admin enevt controller");
         return eventService.getAdmin(users, states, categories, rangeStart, rangeEnd, from, size);
     }
 

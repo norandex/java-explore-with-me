@@ -9,6 +9,7 @@ import ru.practicum.dto.category.CategoryDto;
 import ru.practicum.dto.category.NewCategoryDto;
 import ru.practicum.exception.CategoryNotEmptyException;
 import ru.practicum.exception.DuplicateEntityException;
+import ru.practicum.exception.ForbiddenException;
 import ru.practicum.exception.NotFoundException;
 import ru.practicum.mapper.CategoryMapper;
 import ru.practicum.model.Category;
@@ -57,7 +58,11 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDto update(Long catId, NewCategoryDto newCategoryDto) {
         Category category = categoryRepository.findById(catId)
                 .orElseThrow(() -> new NotFoundException("Category with ID=" + catId + " was not found"));
-
+        if (categoryRepository.existsByName(newCategoryDto.getName())) {
+            throw new ForbiddenException("could not execute statement; SQL [n/a]; constraint [categories_name_key];" +
+                    " nested exception is org.hibernate.exception.ConstraintViolationException:" +
+                    " could not execute statement");
+        }
         category.setName(newCategoryDto.getName());
         Category updatedCategory = categoryRepository.save(category);
         return CategoryMapper.toCategoryDto(updatedCategory);

@@ -160,6 +160,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<EventFullDto> getAdmin(List<Long> usersIds, List<EventState> states, List<Long> categoriesIds,
                                        LocalDateTime rangeStart, LocalDateTime rangeEnd, Integer from, Integer size) {
+        log.info("get admin event service");
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Event> criteriaQuery = criteriaBuilder.createQuery(Event.class);
         Root<Event> eventRoot = criteriaQuery.from(Event.class);
