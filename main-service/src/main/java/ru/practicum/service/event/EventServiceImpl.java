@@ -217,10 +217,10 @@ public class EventServiceImpl implements EventService {
         if (updateEventDate != null && LocalDateTime.now().isAfter(updateEventDate.minusHours(1))) {
             throw new EventDateException("Cannot publish the event because it doesn't meet date time requirements");
         }
+
         if (LocalDateTime.now().isAfter(event.getEventDate().minusHours(1))) {
             throw new EventDateException("Cannot publish the event because it doesn't meet date time requirements");
         }
-        event.setEventDate(DateMapper.formatToDateTime(updateEventAdminRequest.getEventDate()));
         if (updateEventAdminRequest.getAnnotation() != null) {
             event.setAnnotation(updateEventAdminRequest.getAnnotation());
         }
@@ -270,7 +270,6 @@ public class EventServiceImpl implements EventService {
                 }
             }
         }
-
         if (updateEventDate != null) {
             if (event.getPublishedOn() != null) {
                 if (updateEventDate.isBefore(LocalDateTime.now())
@@ -281,7 +280,6 @@ public class EventServiceImpl implements EventService {
             }
             event.setEventDate(updateEventDate);
         }
-
         return EventMapper.toEventFullDto(eventRepository.save(event));
     }
 
@@ -289,10 +287,13 @@ public class EventServiceImpl implements EventService {
     @Transactional
     public EventFullDto create(Long userId, NewEventDto newEventDto) {
         LocalDateTime newEventDate = DateMapper.formatToDateTime(newEventDto.getEventDate());
+        log.info("WTF");
+        log.info(newEventDto.toString());
         if (LocalDateTime.now().isAfter(newEventDate.minusHours(2L))) {
             throw new DateTimeException("Field: eventDate. Error: должно содержать дату, которая еще не наступила." +
                     " Value:" + newEventDate);
         }
+
         Category category = categoryRepository.findById(newEventDto.getCategory()).orElseThrow(() ->
                 new NotFoundException("Category with id= " + newEventDto.getCategory() + " was not found"));
 
@@ -306,6 +307,7 @@ public class EventServiceImpl implements EventService {
         if (event.getParticipantLimit() == null) {
             event.setParticipantLimit(0L);
         }
+        log.info(event.toString());
         return EventMapper.toEventFullDto(eventRepository.save(event));
     }
 
