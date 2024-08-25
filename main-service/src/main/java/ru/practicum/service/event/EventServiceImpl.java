@@ -271,6 +271,17 @@ public class EventServiceImpl implements EventService {
             }
         }
 
+        if (updateEventDate != null) {
+            if (event.getPublishedOn() != null) {
+                if (updateEventDate.isBefore(LocalDateTime.now())
+                        || updateEventDate.isBefore(event.getPublishedOn().plusHours(1))) {
+                    throw new DateTimeException("The start date of the event to be modified" +
+                            " is less than one hour from the publication date.");
+                }
+            }
+            event.setEventDate(updateEventDate);
+        }
+
         return EventMapper.toEventFullDto(eventRepository.save(event));
     }
 
