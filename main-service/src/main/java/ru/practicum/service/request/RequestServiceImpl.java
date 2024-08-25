@@ -20,6 +20,7 @@ import ru.practicum.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -59,7 +60,7 @@ public class RequestServiceImpl implements RequestService {
                 .build();
 
         if (event.getParticipantLimit() == 0 || !event.getRequestModeration()) {
-            if (event.getConfirmedRequestCount() == null) {
+            if (Objects.isNull(event.getConfirmedRequestCount())) {
                 event.setConfirmedRequestCount(1L);
             } else {
                 event.setConfirmedRequestCount(event.getConfirmedRequestCount() + 1L);
@@ -131,7 +132,7 @@ public class RequestServiceImpl implements RequestService {
         if (requestRepository.countByEventIdAndRequestStatusIs(eventId, RequestStatus.CONFIRMED) >= event.getParticipantLimit()) {
             throw new WrongRequestException("The participant limit has been reached");
         }
-        if (event.getConfirmedRequestCount() == null) {
+        if (Objects.isNull(event.getConfirmedRequestCount())) {
             event.setConfirmedRequestCount(0L);
         }
         if (RequestStatus.CONFIRMED.equals(eventRequestStatusUpdateRequest.getStatus())) {

@@ -14,6 +14,7 @@ import ru.practicum.repository.StatsRepository;
 import ru.practicum.exceptions.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +27,6 @@ public class StatsServiceImpl implements StatsService {
     @Override
     public HitDto postHit(HitDto hitDto) {
         EndpointHit hit = StatsMapper.toHit(hitDto);
-        log.info(hit.toString());
         statsRepository.save(hit);
         return StatsMapper.toHitDto(hit);
     }
@@ -39,9 +39,9 @@ public class StatsServiceImpl implements StatsService {
         if (startTime.isAfter(endTime)) {
             throw new DateTimeException("Wrong dates");
         }
-        log.info("parsing finished");
+
         List<ViewStats> result;
-        if (uris != null) {
+        if (Objects.nonNull(uris)) {
             log.info(endTime.toString());
             if (unique) {
                 result = statsRepository.findAllByTimestampAndListOfUrisAndUniqueIp(startTime, endTime, uris);

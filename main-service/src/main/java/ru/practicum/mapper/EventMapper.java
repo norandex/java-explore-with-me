@@ -10,6 +10,7 @@ import ru.practicum.model.User;
 import ru.practicum.model.enums.EventState;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Slf4j
 public class EventMapper {
@@ -67,7 +68,7 @@ public class EventMapper {
                 .initiator(initiator)
                 .location(event.getLocation())
                 .participantLimit(event.getParticipantLimit())
-                .requestModeration(event.getRequestModeration() != null ? event.getRequestModeration() : true)
+                .requestModeration(Objects.nonNull(event.getRequestModeration()) ? event.getRequestModeration() : Boolean.TRUE)
                 .build();
     }
 

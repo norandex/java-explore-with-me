@@ -1,30 +1,31 @@
 package ru.practicum.mapper;
 
 import ru.practicum.exception.WrongDateFormat;
+import ru.practicum.util.DatePattern;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class DateMapper {
-    public static final String PATTERN = "yyyy-MM-dd HH:mm:ss";
 
     public static LocalDateTime formatToDateTime(String time) {
-        if (time == null) {
+        if (Objects.isNull(time)) {
             return null;
         }
         try {
-            return LocalDateTime.parse(time, DateTimeFormatter.ofPattern(PATTERN));
+            return LocalDateTime.parse(time, DateTimeFormatter.ofPattern(DatePattern.PATTERN));
         } catch (Exception e) {
             throw new WrongDateFormat("Wrong date format");
         }
     }
 
     public static String formatToString(LocalDateTime time) {
-        if (time == null) {
+        if (Objects.isNull(time)) {
             return null;
         }
         try {
-            return time.format(DateTimeFormatter.ofPattern(PATTERN));
+            return time.format(DateTimeFormatter.ofPattern(DatePattern.PATTERN));
         } catch (Exception e) {
             throw new WrongDateFormat("Wrong date format");
         }

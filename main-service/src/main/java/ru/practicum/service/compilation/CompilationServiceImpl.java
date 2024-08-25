@@ -21,10 +21,7 @@ import ru.practicum.model.Event;
 import ru.practicum.repository.CompilationRepository;
 import ru.practicum.repository.EventRepository;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +38,7 @@ public class CompilationServiceImpl implements CompilationService {
     @Transactional
     public CompilationDto create(NewCompilationDto newCompilationDto) {
         List<Event> events;
-        if (newCompilationDto.getEvents() != null) {
+        if (Objects.nonNull(newCompilationDto.getEvents())) {
             events = eventRepository.findAllByIdIn(newCompilationDto.getEvents());
         } else {
             events = new ArrayList<>();
@@ -73,16 +70,16 @@ public class CompilationServiceImpl implements CompilationService {
         Compilation compilation = compilationRepository.findById(compId)
                 .orElseThrow(() -> new NotFoundException("Compilation with id=" + compId + " was not found"));
 
-        if (updateCompilationRequest.getPinned() != null) {
+        if (Objects.nonNull(updateCompilationRequest.getPinned())) {
             compilation.setPinned(updateCompilationRequest.getPinned());
         }
 
-        if (updateCompilationRequest.getEvents() != null) {
+        if (Objects.nonNull(updateCompilationRequest.getEvents())) {
             List<Event> events = eventRepository.findAllByIdIn(updateCompilationRequest.getEvents());
             compilation.setEvents(new HashSet<>(events));
         }
 
-        if (updateCompilationRequest.getTitle() != null) {
+        if (Objects.nonNull(updateCompilationRequest.getTitle())) {
             compilation.setTitle(updateCompilationRequest.getTitle());
         }
 
@@ -115,7 +112,7 @@ public class CompilationServiceImpl implements CompilationService {
         Root<Compilation> rootCompilation = criteriaQuery.from(Compilation.class);
         Predicate criteria = criteriaBuilder.conjunction();
 
-        if (pinned != null) {
+        if (Objects.nonNull(pinned)) {
             Predicate isPinned;
             if (pinned) {
                 isPinned = criteriaBuilder.isTrue(rootCompilation.get("pinned"));
