@@ -11,6 +11,7 @@ import ru.practicum.model.EndpointHit;
 import ru.practicum.model.ViewStats;
 import ru.practicum.repository.StatsRepository;
 
+import ru.practicum.exceptions.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +36,9 @@ public class StatsServiceImpl implements StatsService {
         log.info("get stats service");
         LocalDateTime startTime = DateMapper.formatToDateTime(start);
         LocalDateTime endTime = DateMapper.formatToDateTime(end);
+        if (startTime.isAfter(endTime)) {
+            throw new DateTimeException("Wrong dates");
+        }
         log.info("parsing finished");
         List<ViewStats> result;
         if (uris != null) {
