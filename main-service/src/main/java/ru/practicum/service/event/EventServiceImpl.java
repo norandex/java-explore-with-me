@@ -166,7 +166,6 @@ public class EventServiceImpl implements EventService {
         Root<Event> eventRoot = criteriaQuery.from(Event.class);
         List<Predicate> predicates = new ArrayList<>();
 
-
         if (categoriesIds != null && !categoriesIds.isEmpty()) {
             List<Category> categories = categoryRepository.findAllByIdIn(categoriesIds);
             predicates.add(eventRoot.get("category").in(categories));

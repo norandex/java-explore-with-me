@@ -131,6 +131,9 @@ public class RequestServiceImpl implements RequestService {
         if (requestRepository.countByEventIdAndRequestStatusIs(eventId, RequestStatus.CONFIRMED) >= event.getParticipantLimit()) {
             throw new WrongRequestException("The participant limit has been reached");
         }
+        if (event.getConfirmedRequestCount() == null) {
+            event.setConfirmedRequestCount(0L);
+        }
         if (RequestStatus.CONFIRMED.equals(eventRequestStatusUpdateRequest.getStatus())) {
             requests.forEach(r -> {
                 if (event.getConfirmedRequestCount() < event.getParticipantLimit()) {
