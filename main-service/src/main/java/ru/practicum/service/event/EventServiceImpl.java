@@ -61,6 +61,10 @@ public class EventServiceImpl implements EventService {
         Root<Event> eventRoot = criteriaQuery.from(Event.class);
         List<Predicate> predicates = new ArrayList<>();
 
+        if (rangeStart != null && rangeEnd != null && rangeStart.isAfter(rangeEnd)) {
+            throw new DateTimeException("Date time exception");
+        }
+
         if (rangeStart == null) {
             rangeStart = LocalDateTime.now();
         }
