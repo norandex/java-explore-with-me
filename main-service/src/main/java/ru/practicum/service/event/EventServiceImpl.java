@@ -268,6 +268,7 @@ public class EventServiceImpl implements EventService {
                     throw new EventStatusException("Cannot publish the event because it's not in " +
                             "the right state: " + event.getState());
                 }
+                event.setState(EventState.CANCELED);
             }
         }
         if (updateEventDate != null) {
