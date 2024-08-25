@@ -5,10 +5,8 @@ import ru.practicum.util.DatePattern;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class DateMapper {
-    ;
 
     public static LocalDateTime formatToDateTime(String time) {
         try {
