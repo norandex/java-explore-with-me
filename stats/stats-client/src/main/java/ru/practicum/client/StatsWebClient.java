@@ -1,10 +1,10 @@
 package ru.practicum.client;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import ru.practicum.client.StatsClient;
 import ru.practicum.dto.HitDto;
 import ru.practicum.dto.StatsDto;
 
@@ -12,10 +12,11 @@ import java.util.List;
 
 @Component
 public class StatsWebClient implements StatsClient {
+
     private final WebClient webClient;
 
-    public StatsWebClient(String uri) {
-        this.webClient = WebClient.create(uri);
+    public StatsWebClient(@Value("${stats-server.url}") String serverUrl) {
+        this.webClient = WebClient.create(serverUrl);
     }
 
     @Override
