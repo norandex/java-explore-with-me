@@ -69,5 +69,15 @@ CREATE TABLE IF NOT EXISTS compilation_events
     CONSTRAINT fk_events FOREIGN KEY (event_id) REFERENCES events (id)
     );
 
+CREATE TABLE IF NOT EXISTS likes(
+    user_id INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    event_id INTEGER NOT NULL REFERENCES events (id) ON DELETE CASCADE,
+    is_like BOOLEAN,
+    created_on TIMESTAMP WITHOUT TIME ZONE,
+    primary key (user_id, event_id)
+);
+
+
+
 
 
